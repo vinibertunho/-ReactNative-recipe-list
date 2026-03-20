@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
     StyleSheet,
@@ -128,10 +129,18 @@ export default function App() {
     const anim = useRef(new Animated.Value(1)).current;
 
     function favoritar(id) {
-        Animated.sequence([
-            Animated.timing(anim, { toValue: 1.2, duration: 100, useNativeDriver: true }),
-            Animated.timing(anim, { toValue: 1, duration: 100, useNativeDriver: true }),
-        ]).start();
+        Animated.spring(anim, {
+            toValue: 1.5,
+            friction: 3,
+            tension: 100,
+            useNativeDriver: true,
+        }).start(() => {
+            Animated.spring(anim, {
+                toValue: 1,
+                friction: 3,
+                useNativeDriver: true,
+            }).start();
+        });
 
         if (favoritos.includes(id)) {
             setFavoritos(favoritos.filter((f) => f !== id));
@@ -189,13 +198,16 @@ export default function App() {
                                 <Text style={{ color: '#FF7A00' }}>{item.tempo}</Text>
 
                                 <TouchableOpacity onPress={() => favoritar(item.id)}>
-                                    <Animated.Text
+                                    <Animated.View
                                         style={{
                                             transform: [{ scale: anim }],
-                                            fontSize: 18,
                                         }}>
-                                        {fav ? '❤️' : '🤍'}
-                                    </Animated.Text>
+                                        <AntDesign
+                                            name={fav ? 'heart' : 'hearto'}
+                                            size={24}
+                                            color={fav ? 'red' : 'black'}
+                                        />
+                                    </Animated.View>
                                 </TouchableOpacity>
                             </View>
                         </View>
