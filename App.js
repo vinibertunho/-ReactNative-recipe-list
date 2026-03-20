@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import {
     StyleSheet,
     Text,
@@ -166,7 +168,7 @@ export default function App() {
                 ]}
             />
 
-            <ScrollView style={{ padding: 20 }}>
+            <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 20, paddingBottom: 30 }}>
                 {lista.map((item) => {
                     const fav = favoritos.includes(item.id);
 
@@ -177,25 +179,28 @@ export default function App() {
                             <Image source={{ uri: item.imagem }} style={styles.img} />
 
                             <View style={{ flex: 1, marginLeft: 10 }}>
-                                <Text style={{ color: dark ? '#fff' : '#000', fontWeight: 'bold' }}>
+                                <Text style={{ color: dark ? '#fff' : '#000', fontWeight: 'bold', fontSize: 16 }}>
                                     {item.nome}
                                 </Text>
-                                <Text style={{ color: dark ? '#aaa' : '#666' }}>
+                                <Text style={{ color: dark ? '#aaa' : '#666', marginTop: 4 }}>
                                     {item.descricao}
                                 </Text>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+                                    <MaterialIcons name="access-time" size={14} color="#FF7A00" />
+                                    <Text style={{ color: dark ? '#ddd' : '#555', marginLeft: 6, fontWeight: 'bold' }}>
+                                        {item.tempo}
+                                    </Text>
+                                </View>
                             </View>
 
-                            <View style={{ alignItems: 'flex-end' }}>
-                                <Text style={{ color: '#FF7A00' }}>{item.tempo}</Text>
-
+                            <View style={{ alignItems: 'center' }}>
                                 <TouchableOpacity onPress={() => favoritar(item.id)}>
-                                    <Animated.Text
-                                        style={{
-                                            transform: [{ scale: anim }],
-                                            fontSize: 18,
-                                        }}>
-                                        {fav ? '❤️' : '🤍'}
-                                    </Animated.Text>
+                                    {fav ? (
+                                        <MaterialIcons name="favorite" size={24} color="orange" />
+                                    ) : (
+                                        <MaterialIcons name="favorite-border" size={24} color="orange" />
+                                    )}
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -208,6 +213,18 @@ export default function App() {
                     </Text>
                 )}
             </ScrollView>
+
+            <View style={[styles.footer, dark ? styles.cardDark : styles.cardLight]}>
+                <TouchableOpacity>
+                    <Ionicons name="moon" size={24} color={dark ? '#fff' : '#FF7A00'} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Ionicons name="home" size={24} color={dark ? '#fff' : '#FF7A00'} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Ionicons name="list" size={24} color={dark ? '#fff' : '#FF7A00'} />
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
@@ -270,5 +287,14 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 10,
+    },
+
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 12,
+        borderTopWidth: 1,
+        borderColor: '#e6e6e6',
     },
 });
