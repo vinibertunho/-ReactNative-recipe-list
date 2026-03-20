@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import { StatusBar } from 'expo-status-bar';
 import {
     StyleSheet,
