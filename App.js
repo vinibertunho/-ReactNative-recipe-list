@@ -203,7 +203,7 @@ export default function App() {
                                             transform: [{ scale: anim }],
                                         }}>
                                         <AntDesign
-                                            name={fav ? 'heart' : 'hearto'}
+                                            name={fav ? 'heat' : 'hearto'}
                                             size={24}
                                             color={fav ? 'red' : 'black'}
                                         />
