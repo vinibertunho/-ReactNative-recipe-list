@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import { StatusBar } from 'expo-status-bar';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -130,10 +131,18 @@ export default function App() {
     const anim = useRef(new Animated.Value(1)).current;
 
     function favoritar(id) {
-        Animated.sequence([
-            Animated.timing(anim, { toValue: 1.2, duration: 100, useNativeDriver: true }),
-            Animated.timing(anim, { toValue: 1, duration: 100, useNativeDriver: true }),
-        ]).start();
+        Animated.spring(anim, {
+            toValue: 1.5,
+            friction: 3,
+            tension: 100,
+            useNativeDriver: true,
+        }).start(() => {
+            Animated.spring(anim, {
+                toValue: 1,
+                friction: 3,
+                useNativeDriver: true,
+            }).start();
+        });
 
         if (favoritos.includes(id)) {
             setFavoritos(favoritos.filter((f) => f !== id));
